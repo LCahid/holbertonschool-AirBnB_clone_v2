@@ -5,7 +5,7 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 from models.city import City
-from models import storage
+
 
 
 class State(BaseModel, Base):
@@ -19,6 +19,7 @@ class State(BaseModel, Base):
 
         @property
         def cities(self):
+            from models import storage
             """Get a list of all related City objects."""
             city_list = []
             for city in list(storage.all(City).values()):

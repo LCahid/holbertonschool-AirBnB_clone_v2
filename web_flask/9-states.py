@@ -12,12 +12,16 @@ app.url_map.strict_slashes = False
 @app.route('/states')
 @app.route('/states/<id>')
 def states_list(id=None):
+    f = True
     states = storage.all(State).values()
     if id:
         for state in states:
             if state.id == id:
                 states = state
+                f = False
                 break
+        if f:
+            states = None
     return render_template('9-states.html', states=states, id=id)
 
 

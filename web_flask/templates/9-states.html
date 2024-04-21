@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <HTML lang="en">
-    <HEAD>
-        <TITLE>HBNB</TITLE>
-    </HEAD>
-    <BODY>
-        {% if id == None %}
+
+<HEAD>
+    <TITLE>HBNB</TITLE>
+</HEAD>
+
+<BODY>
+    {% if states is mapping %}
         <H1>States</H1>
         <UL>
-            {% for state in states %}
-                <LI>{{state.id}}: <B>{{state.name}}</B></LI>
+            {% for state in states.values()|sort(attribute="name") %}
+            <LI>{{state.id}}: <B>{{state.name}}</B></LI>
             {% endfor %}
         </UL>
-        {% elif states != None %}
+    {% elif states is defined %}
         <H1>State: {{states.name}}</H1>
         <H3>Cities:</H3>
         <UL>
@@ -19,8 +21,9 @@
                 <LI>{{city.id}}: <B>{{city.name}}</B></LI>
             {% endfor %}
         </UL>
-        {% else %}
+    {% else %}
         <H1>Not found!</H1>
-        {% endif %}
-    </BODY>
+    {% endif %}
+</BODY>
+
 </HTML>

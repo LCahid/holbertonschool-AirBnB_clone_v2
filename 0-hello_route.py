@@ -4,21 +4,13 @@ Starting Flask WEB application
 """
 from flask import Flask
 
-
 # Creating an instance of Flask class
-app = Flask("__name__")
-
+app = Flask(__name__)
 
 @app.route("/", strict_slashes=False)
-def hello_world() -> str:
+def hello_world():
     """Hello world in Flask"""
     return "Hello HBNB!"
-
-
-@app.route("/hbnb", strict_slashes=False)
-def hbnb() -> str:
-    """Returning HBNB"""
-    return "HBNB"
 
 
 if __name__ == '__main__':

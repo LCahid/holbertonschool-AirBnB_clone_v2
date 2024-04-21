@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """ State Module for HBNB project """
-from sqlalchemy import String
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+import os
+from sqlalchemy import Column, String
+from sqlalchemy.orm import Mapped, relationship
 
 from models.base_model import Base, BaseModel
 from models.city import City
@@ -12,6 +13,18 @@ class State(BaseModel, Base):
 
     __tablename__ = "states"
 
-    name: Mapped[str] = mapped_column(String(128), nullable=False)
-    cities: Mapped["City"] = relationship("City", backref="state",
-                                          cascade="delete")
+    if os.getenv("HBNB_TYPE_STORAGE") == "db":
+        name: Mapped[str] = Column(String(128), nullable=False)
+        cities: Mapped["City"] = relationship("City", backref="state",
+                                              cascade="delete")
+    else:
+        name = ''
+        def cities(self):
+            """Return the list of City instances with state_id equal to the current State.id"""
+            from models import storage
+            from models.city import City
+            city_list = []
+            for city in storage.all(City).values():
+                if city.state_id == self.id:
+                    city_list.append(city)
+            return city_list

@@ -19,8 +19,11 @@ class State(BaseModel, Base):
                                               cascade="delete")
     else:
         name = ''
+
+        @property
         def cities(self):
-            """Return the list of City instances with state_id equal to the current State.id"""
+            """Return the list of City instances with state_id
+            equal to the current State.id"""
             from models import storage
             from models.city import City
             city_list = []
